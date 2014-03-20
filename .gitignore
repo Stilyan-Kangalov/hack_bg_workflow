@@ -36,4 +36,4 @@ nosetests.xml
 .pydevproject
 
 *.txt
-data_base
+data_base/
