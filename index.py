@@ -4,6 +4,7 @@
 #from mails import *
 from sys import exit
 
+
 # Define main section with functions
 
 # -- Parse the command input from the terminal
@@ -64,7 +65,7 @@ def update_filelist():
 				f.write("\n")
 	f.close()				
 
-def run_create(fixed_command):
+def run_create(fixed_command):	
 	filename = fixed_command[1]
 	files_list.append(filename)
 	target = open (filename, 'w+')
