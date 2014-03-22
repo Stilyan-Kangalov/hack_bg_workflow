@@ -3,7 +3,8 @@
 #from people import *
 #from mails import *
 from sys import exit
-
+import os
+from subprocess import call
 
 # Define main section with functions
 
@@ -53,7 +54,7 @@ def run_help(fixed_command):
                        "* exit - this will quit the program"]
 	for line in list(command_help):
 		print(line)	
-
+'''
 def update_filelist():	
 
 	with open("all_lists.txt", "a") as f:
@@ -74,8 +75,60 @@ def run_create(fixed_command):
 	target.close()
 	files_list.clear()
 	print("Your list has been created.")
+'''
+# Define Class:
 
+class MailList(object):
+	"""basic file functions for MailList"""
+	def __init__(self, arg):
+		self.arg = arg
 
+	def create_files(self):
+		path = 'data_base/'
+		if not os.path.exists(path):
+			os.makedirs(path)
+
+		filename = self[1] + '.txt'
+		# file = open(filename, 'a+')
+		# file.close()
+		with open(os.path.join(path, filename), 'a+') as temp_file:
+			temp_file.close()
+
+	'''def locate_and_run(self):
+		file_name_list = []
+		for root, dirs, files in os.walk('./data_base'):
+			for file in files:
+				file_name_list.append(file)
+		return file_name_list'''
+
+	def show_lists(self):
+		file_name_list = []
+		for root, dirs, files in os.walk('./data_base'):
+			for file in files:
+				file_name_list.append(file)
+		#return file_name_list
+
+		i = 1
+		for item in file_name_list:
+			print(i,'-',item)
+			i+=1
+
+	def show_list(self):
+		path = 'data_base/'
+		filename = self[1]
+		with open(os.path.join(path, filename), 'r') as temp_file:
+			contents = temp_file.read()
+			print(contents)
+			temp_file.close()
+
+# for refactioring
+	def adding_information_to_txt_file(file_name, name, mail):
+		path = 'data_base/'
+		filename = file_name + '.txt'
+		with open(os.path.join(path, filename), 'a+') as temp_file:
+			temp_file.close()					
+
+new_list = MailList		
 
 def sample():
 	print(register_box)
@@ -122,13 +175,16 @@ def main():
    		command = get_command(input("Enter command>")) 
 
    		if is_command(command, "create"):
-   			run_create(command)
+   			new_list.create_files(command)
 
    		elif is_command(command, "add"):
-   			run_register(command)
+   			new_list.adding_information_to_txt_file(command)
 
    		elif is_command(command, "show_lists"):
-   			run_load_lists(command)		
+   			new_list.show_lists(command)
+
+   		elif is_command(command, "show_list"):
+   			new_list.show_list(command)			
   		
    		elif is_command(command, "search_email"):
    			run_search_in_mails(command)
